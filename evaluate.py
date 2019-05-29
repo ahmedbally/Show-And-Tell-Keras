@@ -264,7 +264,7 @@ def evaluate_one(model_dir, method='b', beam_width = 5, alpha = 0.7):
 
     dict_dir = './datasets/features_dict.pkl'
     train_dir = './datasets/Flickr8k_text/Flickr_8k.trainImages.txt'
-    test_dir = './datasets/Flickr8k_text/Flickr_8k.testImages.txt'
+    test_dir = './datasets/Flickr8k_text/Flickr_8k.devImages.txt'
     token_dir = './datasets/Flickr8k_text/Flickr8k.token.txt'
 
     max_len = 24
@@ -312,7 +312,7 @@ def evaluate_all(models_dir, method='b', beam_width = 5, alpha = 0.7):
 
     dict_dir = './datasets/features_dict.pkl'
     train_dir = './datasets/Flickr8k_text/Flickr_8k.trainImages.txt'
-    test_dir = './datasets/Flickr8k_text/Flickr_8k.testImages.txt'
+    test_dir = './datasets/Flickr8k_text/Flickr_8k.devImages.txt'
     token_dir = './datasets/Flickr8k_text/Flickr8k.token.txt'
 
     max_len = 24
@@ -343,7 +343,7 @@ def evaluate_all(models_dir, method='b', beam_width = 5, alpha = 0.7):
 
 if __name__ == '__main__':
 
-    model_dir = './model-params-his/current_best.h5'
+    model_dir = './model-params/model-ep002-loss2.1586-val_loss1.7659.h5'
     img_ids, test_references, candidates = evaluate_one(model_dir, method='b', beam_width = 5, alpha = 0.6)
 
     '''
