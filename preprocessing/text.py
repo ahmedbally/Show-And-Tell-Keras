@@ -8,8 +8,8 @@ import numpy as np
 from keras.preprocessing.text import Tokenizer
 from keras.utils import to_categorical
 
-def load_token_text(token_dir):
 
+def load_token_text(token_dir):
     sents_dict = {}
     with open(token_dir, 'r') as f:
         for line in f.readlines():
@@ -21,12 +21,11 @@ def load_token_text(token_dir):
                 sents_dict[img_id].append(sent)
             else:
                 sents_dict[img_id] = [sent]
-            
+
     return sents_dict
 
 
-def load_dataset_token(dataset_dir, token_dir, start_end = True):
-    
+def load_dataset_token(dataset_dir, token_dir, start_end=True):
     all_sents = load_token_text(token_dir)
 
     img_ids = []
@@ -42,14 +41,13 @@ def load_dataset_token(dataset_dir, token_dir, start_end = True):
                 sent_ = 'startseq ' + sent_ + ' endseq'
 
             sent_list.append(sent_)
-    
+
     return sent_list
 
 
-def create_tokenizer(dataset_dir, token_dir, start_end = True, use_all = False):
-
+def create_tokenizer(dataset_dir, token_dir, start_end=True, use_all=False):
     # 'num_words = None' for all words in training set
-    # for example, 'num_words = 6000', means use maximum 6000 words in vocabulary  
+    # for example, 'num_words = 6000', means use maximum 6000 words in vocabulary
     num_words = None
 
     sent_list = load_dataset_token(dataset_dir, token_dir, start_end)
@@ -69,10 +67,9 @@ def create_tokenizer(dataset_dir, token_dir, start_end = True, use_all = False):
 
 
 def clean_test_sentences(tokenizer, sents_list):
-
-    cleaned_sents_list= []
+    cleaned_sents_list = []
     for sents in sents_list:
         sequences = tokenizer.texts_to_sequences(sents)
         cleaned_sents_list.append(tokenizer.sequences_to_texts(sequences))
-    
+
     return cleaned_sents_list
