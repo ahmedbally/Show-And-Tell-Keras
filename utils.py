@@ -17,7 +17,6 @@ def batch_generator(batch_size, max_len, tokenizer, dict_dir, dataset_dir, token
     raw_sentences = load_dataset_token(dataset_dir, token_dir, True)
 
     N = img_features.shape[0]
-    
     while True:
         for i in range(0, N, batch_size):
             sequences = tokenizer.texts_to_sequences(raw_sentences[i:i+batch_size])

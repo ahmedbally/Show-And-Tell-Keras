@@ -32,10 +32,10 @@ def load_images_as_arrays(directory):
 def extract_features(directory):
     # base_model = InceptionV3(weights='imagenet')
     # model = Model(inputs=base_model.input, outputs=base_model.get_layer('avg_pool').output)
-    model = load_model('./preprocessing/CNN_encoder_100epoch.h5')
-    top = Flatten()(model.output)
-    model = Model(inputs=model.input, outputs=top)
-    print(model.summary())
+    #model = load_model('./preprocessing/CNN_encoder_100epoch.h5')
+    #top = Flatten()(model.output)
+    #model = Model(inputs=model.input, outputs=top)
+    #print(model.summary())
     img_id = []
     img_matrices = []
     i = 0
@@ -61,9 +61,9 @@ def extract_features(directory):
     img_matrices = np.array(img_matrices)
 
     print(img_matrices.shape)
-    img_features = model.predict(img_matrices, verbose=1)
+    #img_features = model.predict(img_matrices, verbose=1)
 
-    return {'ids': img_id, 'features': img_features}
+    return {'ids': img_id, 'features': img_matrices}
 
 
 def extract_feature_from_image(file_dir):
@@ -93,9 +93,9 @@ def load_features(dict_dir, dataset_dir, repeat_times=1):
         fidx = features_dict['ids'].index(img_id)
         dataset_features.append(np.vstack([features_dict['features'][fidx, :]] * repeat_times))
 
-    dataset_features = np.vstack(dataset_features)
+    #dataset_features = np.vstack(dataset_features)
 
-    return dataset_features
+    return np.array(dataset_features)
 
 
 if __name__ == "__main__":
@@ -103,4 +103,4 @@ if __name__ == "__main__":
     image_directory = './datasets/Flickr8k_Dataset'
     features_dict = extract_features(image_directory)
 
-    dump(features_dict, open('./datasets/features_dict.pkl', 'wb'))
+    dump(features_dict, open('./datasets/features_dict1.pkl', 'wb'))

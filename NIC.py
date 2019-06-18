@@ -19,17 +19,43 @@ import numpy as np
 from keras import backend as K
 from keras import regularizers
 from keras.layers import (LSTM, BatchNormalization, Dense, Dropout, Embedding,
-                          Input, Lambda, TimeDistributed)
+                          Input, Lambda, TimeDistributed, Conv2D, MaxPooling2D, Flatten)
 from keras.models import Model
 
 unit_size = 512
 
 def model(vocab_size, max_len, reg):
+    resizeDim = (368, 512)
 
+    inputs1 = Input(shape=(resizeDim[1], resizeDim[0], 1))
+
+    encoder = Conv2D(4, (3, 3), activation='relu', padding='same')(inputs1)
+    encoder = Conv2D(4, (3, 3), activation='relu', padding='same')(encoder)
+    encoder = MaxPooling2D((2, 2))(encoder)
+
+    encoder = Conv2D(8, (3, 3), activation='relu', padding='same')(encoder)
+    encoder = Conv2D(8, (3, 3), activation='relu', padding='same')(encoder)
+    encoder = MaxPooling2D((2, 2))(encoder)
+
+    encoder = Conv2D(16, (3, 3), activation='relu', padding='same')(encoder)
+    encoder = Conv2D(16, (3, 3), activation='relu', padding='same')(encoder)
+    encoder = MaxPooling2D((2, 2))(encoder)
+
+    encoder = Conv2D(32, (3, 3), activation='relu', padding='same')(encoder)
+    encoder = Conv2D(32, (3, 3), activation='relu', padding='same')(encoder)
+    encoder = MaxPooling2D((2, 2))(encoder)
+
+    encoder = Conv2D(32, (3, 3), activation='relu', padding='same')(encoder)
+    encoder = Conv2D(32, (3, 3), activation='relu', padding='same')(encoder)
+    encoder = MaxPooling2D((2, 2))(encoder)
+
+    encoder = Conv2D(32, (3, 3), activation='relu', padding='same')(encoder)
+    encoder = Conv2D(32, (3, 3), activation='relu', padding='same')(encoder)
+    encoder = MaxPooling2D((2, 2))(encoder)
     # Image embedding
-    inputs1 = Input(shape=(94208,))
-    X_img = Dense(2048)(inputs1)
-    X_img = Dropout(0.5)(inputs1)
+    #inputs1 = Input(shape=(94208,))
+    X_img = Dropout(0.7)(encoder)
+    X_img = Flatten()(X_img)
     X_img = Dense(unit_size, use_bias = False, 
                         kernel_regularizer=regularizers.l2(reg),
                         name = 'dense_img')(X_img)
