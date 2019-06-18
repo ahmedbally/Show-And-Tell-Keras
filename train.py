@@ -71,5 +71,5 @@ if __name__ == "__main__":
     dirs_dict = {'dict_dir': dict_dir, 'train_dir': train_dir, 'dev_dir': dev_dir,
                  'token_dir': token_dir, 'params_dir': params_dir}
 
-    training(dirs_dict, lr=0.001, decay=0., reg=1e-4, batch_size=100, epochs=5,
+    training(dirs_dict, lr=0.001, decay=0., reg=1e-4, batch_size=100, epochs=5 ,
              max_len=90, initial_epoch=0, previous_model=None)
