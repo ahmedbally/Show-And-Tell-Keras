@@ -66,7 +66,7 @@ def model(vocab_size, max_len, reg):
 
     # Text embedding
     inputs2 = Input(shape=(max_len,))
-    X_text = Embedding(vocab_size, 128, mask_zero=True, name='emb_text')(inputs2)
+    X_text = Embedding(vocab_size, lstm_size, mask_zero=True, name='emb_text')(inputs2)
     X_text = Dropout(0.1)(X_text)
     #Model(inputs2, X_text).summary()
 
