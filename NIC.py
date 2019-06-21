@@ -26,7 +26,7 @@ unit_size = 1024
 
 
 def model(vocab_size, max_len, reg):
-    resizeDim = (192, 384)
+    resizeDim = (256, 512)
 
     inputs1 = Input(shape=(resizeDim[1], resizeDim[0], 3))
 
@@ -74,7 +74,7 @@ def model(vocab_size, max_len, reg):
     a0 = Input(shape=(unit_size,))
     c0 = Input(shape=(unit_size,))
 
-    LSTMLayer = LSTM(unit_size, return_sequences=True, return_state=True, dropout=0.1, name='lstm')
+    LSTMLayer = LSTM(128, return_sequences=True, return_state=True, dropout=0.1, name='lstm')
 
     # Take image embedding as the first input to LSTM
     _, a, c = LSTMLayer(X_img, initial_state=[a0, c0])
