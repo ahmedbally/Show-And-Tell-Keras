@@ -54,7 +54,6 @@ def training(dirs_dict, lr, decay, reg, batch_size, epochs, max_len, initial_epo
     NIC_model.compile(loss='categorical_crossentropy', optimizer=Adam(lr=lr, decay=decay), metrics=['accuracy'])
 
     # train
-    print("hello world")
     NIC_model.fit_generator(generator_train, steps_per_epoch=2000 // batch_size, epochs=epochs,
                             callbacks=[checkpoint],
                             validation_data=generator_dev, validation_steps=100, initial_epoch=initial_epoch)
@@ -72,4 +71,4 @@ if __name__ == "__main__":
                  'token_dir': token_dir, 'params_dir': params_dir}
 
     training(dirs_dict, lr=0.001, decay=0., reg=1e-4, batch_size=100, epochs=20,
-             max_len=90, initial_epoch=0, previous_model=None)
+             max_len=94, initial_epoch=0, previous_model=None)

@@ -52,7 +52,6 @@ def extract_features(directory):
         #x = img.reshape(img.shape + (1,))
 
         img_id.append(os.path.splitext(img_file)[0])
-        print(img.shape)
         img_matrices.append(img)
         i += 1
 
@@ -89,7 +88,6 @@ def load_features(dict_dir, dataset_dir, repeat_times=1):
     dataset_features = []
     for img_id in img_ids:
         fidx = features_dict['ids'].index(img_id)
-        print(fidx)
         dataset_features.append(np.vstack([features_dict['features'][fidx, :]] * repeat_times))
 
     #dataset_features = np.vstack(dataset_features)

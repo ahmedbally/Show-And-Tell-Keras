@@ -23,7 +23,7 @@ from keras.layers import (LSTM, BatchNormalization, Dense, Dropout, Embedding,
 from keras.models import Model
 
 unit_size = 1024
-
+lstm_size= 128
 
 def model(vocab_size, max_len, reg):
     resizeDim = (256, 512)
@@ -55,26 +55,26 @@ def model(vocab_size, max_len, reg):
     X_img = MaxPooling2D((2, 2))(encoder)
     # Image embedding
     # inputs1 = Input(shape=(94208,))
-    X_img = Dropout(0.1)(encoder)
+    X_img = Dropout(0.1)(X_img)
     X_img = Flatten()(X_img)
-    X_img = Dense(unit_size, use_bias=False,
+    X_img = Dense(lstm_size, use_bias=False,
                   kernel_regularizer=regularizers.l2(reg),
                   name='dense_img')(X_img)
     X_img = BatchNormalization(name='batch_normalization_img')(X_img)
     X_img = Lambda(lambda x: K.expand_dims(x, axis=1))(X_img)
-    Model(inputs1, X_img).summary()
+    #Model(inputs1, X_img).summary()
 
     # Text embedding
     inputs2 = Input(shape=(max_len,))
-    X_text = Embedding(vocab_size, unit_size, mask_zero=True, name='emb_text')(inputs2)
+    X_text = Embedding(vocab_size, 128, mask_zero=True, name='emb_text')(inputs2)
     X_text = Dropout(0.1)(X_text)
-    Model(inputs2, X_text).summary()
+    #Model(inputs2, X_text).summary()
 
     # Initial States
-    a0 = Input(shape=(unit_size,))
-    c0 = Input(shape=(unit_size,))
+    a0 = Input(shape=(lstm_size,))
+    c0 = Input(shape=(lstm_size,))
 
-    LSTMLayer = LSTM(128, return_sequences=True, return_state=True, dropout=0.1, name='lstm')
+    LSTMLayer = LSTM(lstm_size, return_sequences=True, return_state=True, dropout=0.1, name='lstm')
 
     # Take image embedding as the first input to LSTM
     _, a, c = LSTMLayer(X_img, initial_state=[a0, c0])

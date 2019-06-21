@@ -7,7 +7,8 @@ from keras.utils import to_categorical
 
 from preprocessing.image import load_features
 from preprocessing.text import load_dataset_token
-from NIC import unit_size
+from NIC import lstm_size
+
 
 def batch_generator(batch_size, max_len, tokenizer, dict_dir, dataset_dir, token_dir):
 
@@ -32,6 +33,6 @@ def batch_generator(batch_size, max_len, tokenizer, dict_dir, dataset_dir, token
 
             X_text_mat = np.array(X_text)
             Y_text_mat = to_categorical(Y_text, vocab_size)
-            yield ([img_features[i:i+batch_size, :], X_text_mat, np.zeros([X_text_mat.shape[0], unit_size]), np.zeros([X_text_mat.shape[0], unit_size])],
+            yield ([img_features[i:i+batch_size, :], X_text_mat, np.zeros([X_text_mat.shape[0], lstm_size]), np.zeros([X_text_mat.shape[0], lstm_size])],
                     Y_text_mat)
 
