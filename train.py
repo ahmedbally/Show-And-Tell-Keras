@@ -45,7 +45,7 @@ def training(dirs_dict, lr, decay, reg, batch_size, epochs, max_len, initial_epo
 
     # Define checkpoint callback
     file_path = params_dir + '/model-ep{epoch:03d}-loss{loss:.4f}-val_loss{val_loss:.4f}.h5'
-    checkpoint = ModelCheckpoint(file_path, monitor='val_loss', verbose=1, save_weights_only=True, period=1)
+    checkpoint = ModelCheckpoint(file_path, monitor='val_loss', verbose=1, save_weights_only=True, period=5)
     '''tbc = TensorBoardCaption(tokenizer, vocab_size, max_len, log_dir='./logs',
                              feed_pics_dir='./put-your-image-here',
                              model_params_dir=params_dir)'''
@@ -56,12 +56,12 @@ def training(dirs_dict, lr, decay, reg, batch_size, epochs, max_len, initial_epo
     # train
     print("hello world")
     NIC_model.fit_generator(generator_train, steps_per_epoch=2000 // batch_size, epochs=epochs,
-                            #callbacks=[checkpoint, tbc],
+                            callbacks=[checkpoint],
                             validation_data=generator_dev, validation_steps=100, initial_epoch=initial_epoch)
 
 
 if __name__ == "__main__":
-    dict_dir = './datasets/features_dict1.pkl'
+    dict_dir = './datasets/features_dict2.pkl'
     train_dir = './datasets/Flickr8k_text/Flickr_8k.trainImages.txt'
     dev_dir = './datasets/Flickr8k_text/Flickr_8k.devImages.txt'
     token_dir = './datasets/Flickr8k_text/Flickr8k.token.txt'
@@ -71,5 +71,5 @@ if __name__ == "__main__":
     dirs_dict = {'dict_dir': dict_dir, 'train_dir': train_dir, 'dev_dir': dev_dir,
                  'token_dir': token_dir, 'params_dir': params_dir}
 
-    training(dirs_dict, lr=0.001, decay=0., reg=1e-4, batch_size=100, epochs=5 ,
+    training(dirs_dict, lr=0.001, decay=0., reg=1e-4, batch_size=100, epochs=20,
              max_len=90, initial_epoch=0, previous_model=None)

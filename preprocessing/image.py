@@ -45,22 +45,19 @@ def extract_features(directory):
             i += 1
             continue
         img_path = directory + '/' + img_file
-        print(img_file, i)
-        resizeDim = (368, 512)
+        resizeDim = (192, 384)
         img = cv2.imread(img_path)
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         img = cv2.resize(img, resizeDim, interpolation=cv2.INTER_AREA)
-        th, img = cv2.threshold(img, 240, 255, cv2.THRESH_BINARY)
         img = img.astype('float32') / 255
-        x = img.reshape(img.shape + (1,))
+        #x = img.reshape(img.shape + (1,))
 
         img_id.append(os.path.splitext(img_file)[0])
-        img_matrices.append(x)
+        print(img.shape)
+        img_matrices.append(img)
         i += 1
 
     img_matrices = np.array(img_matrices)
 
-    print(img_matrices.shape)
     #img_features = model.predict(img_matrices, verbose=1)
 
     return {'ids': img_id, 'features': img_matrices}
@@ -103,4 +100,4 @@ if __name__ == "__main__":
     image_directory = './datasets/Flickr8k_Dataset'
     features_dict = extract_features(image_directory)
 
-    dump(features_dict, open('./datasets/features_dict1.pkl', 'wb'))
+    dump(features_dict, open('./datasets/features_dict2.pkl', 'wb'),protocol=4)

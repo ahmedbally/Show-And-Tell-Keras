@@ -32,7 +32,6 @@ def batch_generator(batch_size, max_len, tokenizer, dict_dir, dataset_dir, token
 
             X_text_mat = np.array(X_text)
             Y_text_mat = to_categorical(Y_text, vocab_size)
-
-            yield ([img_features[i:i+batch_size, :], X_text_mat, np.zeros([X_text_mat.shape[0], unit_size]), np.zeros([X_text_mat.shape[0], unit_size])], 
+            yield ([img_features[i:i+batch_size, :], X_text_mat, np.zeros([X_text_mat.shape[0], unit_size]), np.zeros([X_text_mat.shape[0], unit_size])],
                     Y_text_mat)
 
