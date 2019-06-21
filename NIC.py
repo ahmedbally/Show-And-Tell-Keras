@@ -23,7 +23,7 @@ from keras.layers import (LSTM, BatchNormalization, Dense, Dropout, Embedding,
 from keras.models import Model
 
 unit_size = 1024
-lstm_size= 128
+lstm_size= 64
 
 def model(vocab_size, max_len, reg):
     resizeDim = (256, 512)
