@@ -54,7 +54,7 @@ def training(dirs_dict, lr, decay, reg, batch_size, epochs, max_len, initial_epo
     NIC_model.compile(loss='categorical_crossentropy', optimizer=Adam(lr=lr, decay=decay), metrics=['accuracy'])
 
     # train
-    NIC_model.fit_generator(generator_train, steps_per_epoch=2000 // batch_size, epochs=epochs,
+    NIC_model.fit_generator(generator_train, steps_per_epoch=8000 // batch_size, epochs=epochs,
                             callbacks=[checkpoint],
                             validation_data=generator_dev, validation_steps=100, initial_epoch=initial_epoch)
 
