@@ -41,16 +41,15 @@ def extract_features(directory):
     i = 0
     for img_file in os.listdir(directory):
         print(i, ":", i > 1999 and i < 8000 or i > 8999)
-        if (i > 1999 and i < 8000 or i > 8999):
+        '''if (i > 1999 and i < 8000 or i > 8999):
             i += 1
-            continue
+            continue'''
         img_path = directory + '/' + img_file
         resizeDim = (256, 512)
         img = cv2.imread(img_path)
         img = cv2.resize(img, resizeDim, interpolation=cv2.INTER_AREA)
-        img = img.astype('float32') / 255
+        img = img.astype('float16') / 255
         #x = img.reshape(img.shape + (1,))
-
         img_id.append(os.path.splitext(img_file)[0])
         img_matrices.append(img)
         i += 1
@@ -83,8 +82,8 @@ def load_features(dict_dir, dataset_dir, repeat_times=1):
         for line in f.readlines():
             img_ids.append(os.path.splitext(line)[0])
 
-    #features_dict = load(open(dict_dir, 'rb'))
-    features_dict = extract_features('./datasets/Flickr8k_Dataset')
+    features_dict = load(open(dict_dir, 'rb'))
+    #features_dict = extract_features('./datasets/Flickr8k_Dataset')
     dataset_features = []
     for img_id in img_ids:
         fidx = features_dict['ids'].index(img_id)
