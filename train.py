@@ -45,7 +45,7 @@ def training(dirs_dict, lr, decay, reg, batch_size, epochs, max_len, initial_epo
 
     # Define checkpoint callback
     file_path = params_dir + '/model-ep{epoch:03d}-loss{loss:.4f}-val_loss{val_loss:.4f}.h5'
-    checkpoint = ModelCheckpoint(file_path, monitor='val_loss', verbose=1, save_weights_only=True, period=5)
+    checkpoint = ModelCheckpoint(file_path, monitor='val_loss', verbose=1, save_weights_only=True, period=2)
     '''tbc = TensorBoardCaption(tokenizer, vocab_size, max_len, log_dir='./logs',
                              feed_pics_dir='./put-your-image-here',
                              model_params_dir=params_dir)'''
@@ -65,10 +65,10 @@ if __name__ == "__main__":
     dev_dir = './datasets/Flickr8k_text/Flickr_8k.devImages.txt'
     token_dir = './datasets/Flickr8k_text/Flickr8k.token.txt'
     # where to put the model weigths
-    params_dir = './model-params'
+    params_dir = '../drive/My Drive/'
 
     dirs_dict = {'dict_dir': dict_dir, 'train_dir': train_dir, 'dev_dir': dev_dir,
                  'token_dir': token_dir, 'params_dir': params_dir}
 
-    training(dirs_dict, lr=0.001, decay=0., reg=1e-4, batch_size=100, epochs=20,
+    training(dirs_dict, lr=0.001, decay=0., reg=1e-4, batch_size=100, epochs=80,
              max_len=94, initial_epoch=0, previous_model=None)
