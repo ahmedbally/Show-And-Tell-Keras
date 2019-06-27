@@ -58,7 +58,7 @@ def create_tokenizer(dataset_dir, token_dir, start_end=True, use_all=False):
         if num_words:
             tokenizer = Tokenizer(num_words)
         else:
-            tokenizer = Tokenizer()
+            tokenizer = Tokenizer(split=" ",filters='')
     sent_list = list(map(lambda x: x.split(), sent_list))
 
     tokenizer.fit_on_texts(sent_list)
