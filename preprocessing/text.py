@@ -37,9 +37,21 @@ def load_dataset_token(dataset_dir, token_dir, start_end=True):
     for id in img_ids:
         for sent in all_sents[id]:
             sent_ = sent
+            sent_ = sent_[sent_.find('container') + len('container') + 2:].replace("{", " {").replace("\n", " ").replace("\t",
+                                                                                                                   "")
+            paran = 0
+            endIndex = -1
+            for i in range(len(sent_)):
+                token = sent_[i]
+                if token == '{':
+                    paran += 1
+                elif token == '}':
+                    paran -= 1
+                    if paran == 0:
+                        endIndex = i
+                        break
             if start_end:
-                sent_ = 'startseq ' + sent_ + ' endseq'
-
+                sent_ = 'startseq ' + sent_[:i+1] + ' endseq'
             sent_list.append(sent_)
 
     return sent_list

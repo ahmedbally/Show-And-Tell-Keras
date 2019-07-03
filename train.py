@@ -30,7 +30,7 @@ def training(dirs_dict, lr, decay, reg, batch_size, epochs, max_len, initial_epo
     # if batch size of training set is 30 and total 30000 sentences, then 1000 steps.
     # if batch size of dev set is 50 and total 5000 sentences, then 100 steps.
     generator_train = batch_generator(batch_size, max_len, tokenizer, dict_dir, train_dir, token_dir)
-    generator_dev = batch_generator(50, max_len, tokenizer, dict_dir, dev_dir, token_dir)
+    generator_dev = batch_generator(15, max_len, tokenizer, dict_dir, dev_dir, token_dir)
 
     vocab_size = tokenizer.num_words or (len(tokenizer.word_index) + 1)
 
@@ -44,7 +44,7 @@ def training(dirs_dict, lr, decay, reg, batch_size, epochs, max_len, initial_epo
         NIC_model.load_weights(previous_model, by_name=True, skip_mismatch=True)
 
     # Define checkpoint callback
-    file_path = params_dir + '/model-ep{epoch:03d}-loss{loss:.4f}-val_loss{val_loss:.4f}.h5'
+    file_path = params_dir + '/model-ep_6{epoch:03d}-loss{loss:.4f}-val_loss{val_loss:.4f}.h5'
     checkpoint = ModelCheckpoint(file_path, monitor='val_loss', verbose=1, save_weights_only=True, period=2)
     '''tbc = TensorBoardCaption(tokenizer, vocab_size, max_len, log_dir='./logs',
                              feed_pics_dir='./put-your-image-here',
@@ -70,5 +70,5 @@ if __name__ == "__main__":
     dirs_dict = {'dict_dir': dict_dir, 'train_dir': train_dir, 'dev_dir': dev_dir,
                  'token_dir': token_dir, 'params_dir': params_dir}
 
-    training(dirs_dict, lr=0.001, decay=0., reg=1e-4, batch_size=100, epochs=80,
+    training(dirs_dict, lr=0.001, decay=0., reg=1e-4, batch_size=4, epochs=80,
              max_len=94, initial_epoch=0, previous_model=None)
